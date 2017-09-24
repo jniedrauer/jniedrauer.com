@@ -15,3 +15,11 @@ resource "aws_subnet" "public" {
     }
     count = "${length(var.public_subnets)}"
 }
+
+output "id" {
+    value = "${aws_vpc.main.id}"
+}
+
+output "public_subnets" {
+    value = "${join(",", aws_subnet.public.*.id)}"
+}

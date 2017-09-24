@@ -3,7 +3,16 @@ azs = {
     us-west-2 = "us-west-2a,us-west-2b,us-west-2c"
 }
 
+amzn_amis = {
+    us-east-1 = "ami-a4c7edb2"
+}
+
+ssh_cidrs = [
+    "76.183.216.168/32"
+]
+
 ports = {
     ssh = "22"
-    webserver = "80,443"
+    http = "80"
+    https = "443"
 }

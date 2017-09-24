@@ -5,8 +5,6 @@ ENV := prod
 help:
 	@echo "Wrapper for terraform. Use \`make plan\` or \`make apply\`"
 
-all: init setup plan apply
-
 .terraform:
 	terraform init ${ENV}
 
@@ -22,4 +20,4 @@ apply:
 destroy:
 	terraform destroy -var-file=${ENV}/${ENV}.tfvars -state=${ENV}/${ENV}.tfstate ${ENV}
 
-.PHONY: help all setup plan apply destroy
+.PHONY: help all setup plan apply destroy output

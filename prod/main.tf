@@ -21,4 +21,7 @@ module "webserver-cluster" {
     public_subnets = "${var.public_subnets}"
     private_subnets = "${var.private_subnets}"
     azs = "${var.azs}"
+    ami = "${lookup(var.amzn_amis, var.aws_config["region"])}"
+    ports = "${var.ports}"
+    ssh_cidrs = "${var.ssh_cidrs}"
 }
