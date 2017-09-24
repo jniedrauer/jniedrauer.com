@@ -1,3 +1,5 @@
+module "static" { source = "../modules/vars/all" }
+
 # TODO: Remove this once https://github.com/hashicorp/terraform/issues/10722 is fixed
 provider "aws" {
     version = "~> 0.1"
@@ -17,11 +19,4 @@ module "keypairs" {
 module "webserver-cluster" {
     source = "services/webserver-cluster"
     aws_config = "${var.aws_config}"
-    vpc_cidr = "${var.vpc_cidr}"
-    public_subnets = "${var.public_subnets}"
-    private_subnets = "${var.private_subnets}"
-    azs = "${var.azs}"
-    ami = "${lookup(var.amzn_amis, var.aws_config["region"])}"
-    ports = "${var.ports}"
-    ssh_cidrs = "${var.ssh_cidrs}"
 }

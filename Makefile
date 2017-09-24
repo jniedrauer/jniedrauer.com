@@ -12,12 +12,12 @@ setup: .terraform
 	terraform get ${ENV}
 
 plan: setup
-	terraform plan -var-file=${ENV}/${ENV}.tfvars -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform plan -state=${ENV}/${ENV}.tfstate ${ENV}
 
 apply:
-	terraform apply -var-file=${ENV}/${ENV}.tfvars -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform apply -state=${ENV}/${ENV}.tfstate ${ENV}
 
 destroy:
-	terraform destroy -var-file=${ENV}/${ENV}.tfvars -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform destroy -state=${ENV}/${ENV}.tfstate ${ENV}
 
-.PHONY: help all setup plan apply destroy output
+.PHONY: help all setup plan apply destroy

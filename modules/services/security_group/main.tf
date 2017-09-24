@@ -1,3 +1,5 @@
+module "static" { source = "../../vars/all" }
+
 resource "aws_security_group" "main" {
     name        = "${var.name}"
     description = "${var.description}"
@@ -6,32 +8,22 @@ resource "aws_security_group" "main" {
 
 resource "aws_security_group_rule" "ingress_ssh" {
     type = "ingress"
-    from_port = "${var.ports["ssh"]}"
-    to_port = "${var.ports["ssh"]}"
+    from_port = "${module.static.protocol_ports["ssh"]}"
+    to_port = "${module.static.protocol_ports["ssh"]}"
     protocol = "tcp"
-    cidr_blocks = "${var.ssh_cidrs}"
+    cidr_blocks = "${module.static.ssh_cidrs}"
     security_group_id = "${aws_security_group.main.id}"
-    count = "${var.config["ssh"]}"
+    count = "${var.ssh}"
 }
 
-resource "aws_security_group_rule" "ingress_http" {
+resource "aws_security_group_rule" "ingress_tcp" {
     type = "ingress"
-    from_port = "${var.ports["http"]}"
-    to_port = "${var.ports["http"]}"
+    from_port = "${element(var.ports, count.index)}"
+    to_port = "${element(var.ports, count.index)}"
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     security_group_id = "${aws_security_group.main.id}"
-    count = "${var.config["http"]}"
-}
-
-resource "aws_security_group_rule" "ingress_https" {
-    type = "ingress"
-    from_port = "${var.ports["https"]}"
-    to_port = "${var.ports["https"]}"
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    security_group_id = "${aws_security_group.main.id}"
-    count = "${var.config["https"]}"
+    count = "${length(var.ports)}"
 }
 
 resource "aws_security_group_rule" "egress_all" {
