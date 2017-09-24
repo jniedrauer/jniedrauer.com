@@ -2,16 +2,28 @@
 
 ENV := prod
 
-help:
-	@echo "Wrapper for terraform. Use \`make plan\` or \`make apply\`"
+VENV=venv
+PYTHON=python3
+PIP=$(VENV)/bin/pip
+
+setup: tfsetup venv
+
+$(PIP):
+	$(PYTHON) -m venv $(VENV)
+
+venv: $(VENV)/bin/activate
+
+$(VENV)/bin/activate: requirements.txt
+	test -d $(VENV) || $(PYTHON) -m venv $(VENV)
+	$(PIP) install -Ur requirements.txt
 
 .terraform:
 	terraform init ${ENV}
 
-setup: .terraform
+tfsetup: .terraform
 	terraform get ${ENV}
 
-plan: setup
+plan: tfsetup
 	terraform plan -state=${ENV}/${ENV}.tfstate ${ENV}
 
 apply:
@@ -20,4 +32,8 @@ apply:
 destroy:
 	terraform destroy -state=${ENV}/${ENV}.tfstate ${ENV}
 
-.PHONY: help all setup plan apply destroy
+help:
+	@echo "No target specified will create a virtualenv and init terraform."
+	@echo "Use \`make plan\` or \`make apply\` for terraform deployment."
+
+.PHONY: help setup tfsetup plan apply destroy
