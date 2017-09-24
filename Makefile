@@ -40,14 +40,17 @@ build:
 tfsetup: .terraform
 	terraform get ${ENV}
 
+refresh:
+	terraform refresh ${ENV}
+
 plan: tfsetup
-	terraform plan -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform plan ${ENV}
 
 apply:
-	terraform apply -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform apply ${ENV}
 
 destroy:
-	terraform destroy -state=${ENV}/${ENV}.tfstate ${ENV}
+	terraform destroy ${ENV}
 
 help:
 	@echo "No target specified will create a virtualenv and init terraform."

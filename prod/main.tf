@@ -1,15 +1,18 @@
 module "static" { source = "../modules/vars/all" }
 
-# TODO: Remove this once https://github.com/hashicorp/terraform/issues/10722 is fixed
 provider "aws" {
     version = "~> 0.1"
-    profile = "${var.aws_config["profile"]}"
-    region  = "${var.aws_config["region"]}"
+    profile = "jniedrauer.com"
+    region  = "us-east-1"
 }
 
-module "aws" {
-    source = "../modules/providers/aws"
-    aws_config = "${var.aws_config}"
+terraform {
+    backend "s3" {
+        bucket = "terraform.jniedrauer.com"
+        key = "state/prod/prod.tfstate"
+        profile = "jniedrauer.com"
+        region = "us-east-1"
+    }
 }
 
 module "keypairs" {
