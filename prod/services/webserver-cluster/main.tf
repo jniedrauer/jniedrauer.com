@@ -17,15 +17,12 @@ module "security_group" {
     ports = [80, 443]
 }
 
-resource "aws_instance" "jniedrauer-com" {
-    ami = "${lookup(module.static.amzn_amis, var.aws_config["region"])}"
-    count = 1
-    instance_type = "t2.nano"
-    key_name = "jniedrauer-laptop"
-    vpc_security_group_ids = ["${module.security_group.id}"]
-    subnet_id = "${element(split(",", module.vpc.public_subnets), count.index)}"
-    tags {
-        Name = "jniedrauer.com${count.index}"
-        Group = "jniedrauer.com"
-    }
+module "webserver" {
+    source = "../../../modules/services/ec2"
+    ami = "${lookup(module.static.amzn_ecs_amis, var.aws_config["region"])}"
+    number = 1
+    type = "t2.micro"
+    security_group = "${module.security_group.id}"
+    subnets = "${split(",", module.vpc.public_subnets)}"
+    group = "webserver"
 }

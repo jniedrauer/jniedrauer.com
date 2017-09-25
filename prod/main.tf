@@ -15,10 +15,6 @@ terraform {
     }
 }
 
-module "keypairs" {
-    source = "../modules/services/keypairs"
-}
-
 module "webserver-cluster" {
     source = "services/webserver-cluster"
     aws_config = "${var.aws_config}"

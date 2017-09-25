@@ -13,6 +13,14 @@ variable "amzn_amis" {
 }
 output "amzn_amis" { value = "${var.amzn_amis}" }
 
+variable "amzn_ecs_amis" {
+    default = {
+        us-east-1 = "ami-9eb4b1e5"
+        us-west-2 = "ami-1d668865"
+    }
+}
+output "amzn_ecs_amis" { value = "${var.amzn_amis}" }
+
 variable "ssh_cidrs" {
     default = [
         "76.183.216.168/32"

@@ -1,4 +1,4 @@
-resource "aws_key_pair" "jniedrauer-laptop" {
-    key_name = "jniedrauer-laptop"
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6f1ZqTK05R4lgpwt2onWEJnGa2kISsGxIbdy2fCbK4w0llerFzLzkiTdcmGS2OppC+i93IAEeah62MHy1whHk5odDqsB7jN5UBMbKo1NYZ/s//PpJIzoZ34eayrH50Is+uiFbYJg0fQNhGw9SM/wEZyItT4fV5zwxe076GyhkbNB9GSlonQEBSRSMZXvLLdLVkHBZiZqx3FQ+N7QIhMN5C2iyv1ZJXkuBaUE+KrQCNNFeeaPpZooeNfvyTHVhDBoqn51K2iaPVODf/hoOiO0reAr7NphslT58nZHsiVJWZTz0AdYXwhIgAJvmlHbz7HiZCx+4nSwrqbq4kRgmiuivJzqcyRrleDdBk34ua8EI2BrkcaF/sxarKJ+o6LhzG6ix/mUEibDRoCVi3brN9YQcG6fWebre8Tk5DcYavqJJcRmB0irl5x9Ng3kbZVkc8g8opE0DCqlcBadfyr7MLbofKqjgyDv3OvRy47tv13D/9ndeFUFebtNhhWad/aiPDG6F/Y/tjtZHNqyOuLDienZpjMi3fGmpbziKzQngfs+VanW4sSUm8GBEP9NlTYbcDIyn84tx7/rGCcJvovczABYuuEsqD1DApfvoipLXwsBRS+duT9kJXed1/LOJMOxSxtjhJxHcTVMaP1RCiZL9lA04lcXeYoaDF/PznmmBMU8OFQ== jniedrauer@lappy"
+resource "aws_key_pair" "ssh_keypairs" {
+    key_name = "${var.users[count.index]}"
+    public_key = "${lookup(var.publickeys, var.users[count.index]
 }
