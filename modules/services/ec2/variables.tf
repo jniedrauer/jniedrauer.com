@@ -4,6 +4,14 @@ variable "type" { type = "string" }
 variable "security_group" { type = "string" }
 variable "subnets" { type = "list" }
 variable "group" { type = "string" }
+variable "files" { default = [] }
+variable "packages" { default = [] }
+variable "default_packages" {
+    default = [
+        "python35",
+        "python35-pip"
+    ]
+}
 variable "users" {
     default = [
         {

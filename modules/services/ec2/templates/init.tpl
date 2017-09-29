@@ -5,9 +5,7 @@ hostname: "${hostname}"
 fqdn "${hostname}.internal"
 manage_etc_hosts: true
 
-packages:
-  - python35
-  - python35-pip
+packages: ${packages}
 
 runcmd:
   - sed -i '/^Defaults.*requiretty$/d' /etc/sudoers

@@ -17,12 +17,40 @@ module "security_group" {
     ports = [80, 443]
 }
 
-module "webserver" {
-    source = "../../../modules/services/ec2"
-    ami = "${lookup(module.static.amzn_ecs_amis, var.aws_config["region"])}"
-    number = 1
-    type = "t2.micro"
-    security_group = "${module.security_group.id}"
-    subnets = "${split(",", module.vpc.public_subnets)}"
-    group = "webserver"
+resource "aws_ecr_repository" "ecr" {
+    name = "jniedrauer.com"
 }
+
+data "template_file" "container-definition" {
+    template = "${file("${path.module}/task-definitions/service.json")}"
+    vars {
+        image = "${aws_ecr_repository.ecr.repository_url}/jniedrauer.com:latest"
+    }
+}
+
+resource "aws_ecs_task_definition" "service" {
+    family                = "service"
+    container_definitions = "${data.template_file.container-definition.rendered}"
+
+    # Volumes can go here if needed
+
+    placement_constraints {
+        type       = "memberOf"
+        expression = "attribute:ecs.availability-zone in [${lookup(module.static.azs, var.aws_config["region"])}]"
+    }
+}
+
+
+
+#module "webserver" {
+#    source = "../../../modules/services/ec2"
+#    ami = "${lookup(module.static.amzn_ecs_amis, var.aws_config["region"])}"
+#    number = 1
+#    type = "t2.micro"
+#    security_group = "${module.security_group.id}"
+#    subnets = "${split(",", module.vpc.public_subnets)}"
+#    group = "webserver"
+#    packages = ["haproxy", "nc"]
+#    files = {
+#    }
+#}
