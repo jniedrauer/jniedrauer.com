@@ -18,7 +18,7 @@ module "security_group" {
 }
 
 resource "aws_ecr_repository" "ecr" {
-    name = "jniedrauer.com"
+    name = "jniedrauer"
 }
 
 data "template_file" "container-definition" {
