@@ -1,0 +1,14 @@
+[
+  {
+    "name": "app",
+    "image": "${image}",
+    "cpu": 512,
+    "memory": 512,
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 80
+      }
+    ]
+  }
+]
