@@ -40,7 +40,7 @@ $(VENV)/bin/activate: requirements.txt
 build:
 	$(DOCKER) build -t ${REPO_NAME}/${IMAGE_NAME}:${TAG} .
 
-deploy:
+deploy: build
 	AWS_PROFILE=${AWS_PROFILE} \
 		aws ecr get-authorization-token --region=${REGION} \
 		--output=text --query 'authorizationData[].authorizationToken' \
