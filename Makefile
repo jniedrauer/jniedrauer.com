@@ -11,6 +11,11 @@ REPO := $(shell AWS_PROFILE=${AWS_PROFILE} \
 	aws ecr describe-repositories --region=${REGION} \
 	--repository-names=$(REPO_NAME) \
 	--output=text --query 'repositories[].repositoryUri')
+TASK = $(shell AWS_PROFILE=${AWS_PROFILE} \
+	aws ecs list-tasks --region=${REGION} \
+	--cluster=jniedrauer-com \
+	--service-name=jniedrauer-com \
+	--output=text --query='taskArns[0]')
 
 VENV = venv
 PYTHON = python3
@@ -48,6 +53,21 @@ deploy: build
 	| $(DOCKER) login -u AWS ${REPO} --password-stdin
 	$(DOCKER) tag ${REPO_NAME}:${IMAGE_NAME}.${TAG} ${REPO}:${IMAGE_NAME}.${TAG}
 	$(DOCKER) push ${REPO}:${IMAGE_NAME}.${TAG}
+	AWS_PROFILE=${AWS_PROFILE} \
+		aws ecs register-task-definition --region=${REGION} --family=service \
+		--container-definitions '$(shell sed 's|$$$\{image}|${REPO}:${IMAGE_NAME}.${TAG}|' \
+            prod/services/webserver-cluster/task-definitions/service.json)'
+	AWS_PROFILE=${AWS_PROFILE} \
+		aws ecs stop-task --region=${REGION} \
+		--cluster=jniedrauer-com \
+		--task=${TASK} \
+		--reason="Deploying ${IMAGE_NAME}.${TAG}" \
+		|| :
+	AWS_PROFILE=${AWS_PROFILE} \
+		aws ecs update-service --region=${REGION} \
+		--cluster=jniedrauer-com \
+		--service=jniedrauer-com \
+		--task-definition=service
 
 #############
 # terraform #
