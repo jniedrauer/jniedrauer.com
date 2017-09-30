@@ -19,7 +19,7 @@ variable "amzn_ecs_amis" {
         us-west-2 = "ami-1d668865"
     }
 }
-output "amzn_ecs_amis" { value = "${var.amzn_amis}" }
+output "amzn_ecs_amis" { value = "${var.amzn_ecs_amis}" }
 
 variable "ssh_cidrs" {
     default = [

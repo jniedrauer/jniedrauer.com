@@ -6,6 +6,8 @@ variable "subnets" { type = "list" }
 variable "group" { type = "string" }
 variable "files" { default = [] }
 variable "packages" { default = [] }
+variable "profile" { type = "string" }
+variable "ecs_cluster" { type = "string" }
 variable "default_packages" {
     default = [
         "python35",

@@ -8,15 +8,6 @@ module "vpc" {
     private_subnets = "${var.private_subnets}"
 }
 
-module "security_group" {
-    source = "../../../modules/services/security_group"
-    name = "webserverSG"
-    description = "jniedrauer.com Webserver SG"
-    vpc = "${module.vpc.id}"
-    ssh = true
-    ports = [80, 443]
-}
-
 resource "aws_ecr_repository" "ecr" {
     name = "jniedrauer"
 }
@@ -24,7 +15,7 @@ resource "aws_ecr_repository" "ecr" {
 data "template_file" "container-definition" {
     template = "${file("${path.module}/task-definitions/service.json")}"
     vars {
-        image = "${aws_ecr_repository.ecr.repository_url}/jniedrauer.com:latest"
+        image = "${aws_ecr_repository.ecr.repository_url}:latest"
     }
 }
 
@@ -131,16 +122,23 @@ resource "aws_security_group" "elb-sg" {
     }
 }
 
-resource "aws_security_group" "ecs-sg" {
-    name = "ecs"
-    description = "Allow traffic from elb_sg"
+resource "aws_security_group" "webserver-sg" {
+    name = "webserver_sg"
+    description = "Allow traffic from elb_sg and SSH from everywhere"
     vpc_id = "${module.vpc.id}"
 
     ingress {
         from_port = 0
         to_port = 0
-        protocol = "-1"
+        protocol = "-1" 
         security_groups = ["${aws_security_group.elb-sg.id}"]
+    }
+
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     egress {
@@ -150,6 +148,7 @@ resource "aws_security_group" "ecs-sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
+
 
 resource "aws_ecs_service" "website" {
     name = "jniedrauer-com"
@@ -183,17 +182,45 @@ resource "aws_route53_record" "website" {
     }
 }
 
+resource "aws_iam_role" "ecs-container" {
+    name = "ecsContainerRole"
 
+    assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Principal": { 
+                "Service": "ec2.amazonaws.com"
+        },
+        "Effect": "Allow",
+        "Sid": ""
+        }
+    ]
+}
+EOF
+}
 
-#module "webserver" {
-#    source = "../../../modules/services/ec2"
-#    ami = "${lookup(module.static.amzn_ecs_amis, var.aws_config["region"])}"
-#    number = 1
-#    type = "t2.micro"
-#    security_group = "${module.security_group.id}"
-#    subnets = "${split(",", module.vpc.public_subnets)}"
-#    group = "webserver"
-#    packages = ["haproxy", "nc"]
-#    files = {
-#    }
-#}
+resource "aws_iam_role_policy_attachment" "attach-ecs-container" {
+    role = "${aws_iam_role.ecs-container.id}"
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_instance_profile" "ecs-profile" {
+  name = "ecs_profile"
+  role = "${aws_iam_role.ecs-container.name}"
+}
+
+module "webserver" {
+    source = "../../../modules/services/ec2"
+    ami = "${lookup(module.static.amzn_ecs_amis, var.aws_config["region"])}"
+    number = 1
+    type = "t2.micro"
+    security_group = "${aws_security_group.webserver-sg.id}"
+    subnets = "${split(",", module.vpc.public_subnets)}"
+    group = "webserver"
+    profile = "${aws_iam_instance_profile.ecs-profile.id}"
+    packages = ["haproxy", "nc"]
+    ecs_cluster = "${aws_ecs_cluster.website.name}"
+}
