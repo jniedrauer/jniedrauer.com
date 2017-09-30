@@ -57,12 +57,13 @@ deploy: build
 		aws ecs register-task-definition --region=${REGION} --family=service \
 		--container-definitions '$(shell sed 's|$$$\{image}|${REPO}:${IMAGE_NAME}.${TAG}|' \
             prod/services/webserver-cluster/task-definitions/service.json)'
+	@echo "Halting running tasks"
 	AWS_PROFILE=${AWS_PROFILE} \
 		aws ecs stop-task --region=${REGION} \
 		--cluster=jniedrauer-com \
 		--task=${TASK} \
 		--reason="Deploying ${IMAGE_NAME}.${TAG}" \
-		|| :
+		&& sleep 30 || :
 	AWS_PROFILE=${AWS_PROFILE} \
 		aws ecs update-service --region=${REGION} \
 		--cluster=jniedrauer-com \
