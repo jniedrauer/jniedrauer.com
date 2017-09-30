@@ -37,5 +37,6 @@ variable "protocol_ports" {
 }
 output "protocol_ports" { value = "${var.protocol_ports}" }
 
-variable "zone_id" { default = "ZELCDUNSF35JN" }
-output "zone_id" { value = "${var.zone_id}" }
+output "jniedrauer_zone_id" { value = "ZELCDUNSF35JN" }
+
+output "josiahniedrauer_zone_id" { value = "Z2HTWVNDFNAJVB" }

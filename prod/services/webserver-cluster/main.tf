@@ -170,9 +170,21 @@ resource "aws_ecs_service" "website" {
     }
 }
 
-resource "aws_route53_record" "website" {
-    zone_id = "${module.static.zone_id}"
+resource "aws_route53_record" "jniedrauer" {
+    zone_id = "${module.static.jniedrauer_zone_id}"
     name = "jniedrauer.com"
+    type = "A"
+
+    alias {
+        name = "${aws_elb.ecs.dns_name}"
+        zone_id = "${aws_elb.ecs.zone_id}"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "josiahniedrauer" {
+    zone_id = "${module.static.josiahniedrauer_zone_id}"
+    name = "josiahniedrauer.com"
     type = "A"
 
     alias {
