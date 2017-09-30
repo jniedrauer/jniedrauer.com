@@ -38,7 +38,7 @@ $(VENV)/bin/activate: requirements.txt
 ##########
 
 build:
-	$(DOCKER) build -t ${REPO_NAME}/${IMAGE_NAME}:${TAG} .
+	$(DOCKER) build -t ${REPO_NAME}:${IMAGE_NAME}.${TAG} .
 
 deploy: build
 	AWS_PROFILE=${AWS_PROFILE} \
@@ -46,8 +46,8 @@ deploy: build
 		--output=text --query 'authorizationData[].authorizationToken' \
 	| base64 -d | cut -d: -f2 \
 	| $(DOCKER) login -u AWS ${REPO} --password-stdin
-	$(DOCKER) tag ${REPO_NAME}/${IMAGE_NAME}:${TAG} ${REPO}/${IMAGE_NAME}:${TAG}
-	$(DOCKER) push ${REPO}
+	$(DOCKER) tag ${REPO_NAME}:${IMAGE_NAME}.${TAG} ${REPO}:${IMAGE_NAME}.${TAG}
+	$(DOCKER) push ${REPO}:${IMAGE_NAME}.${TAG}
 
 #############
 # terraform #
