@@ -95,10 +95,59 @@ resource "aws_elb" "ecs" {
         interval = 30
     }
 
+    security_groups = ["${aws_security_group.elb-sg.id}"]
+
     subnets = ["${split(",", module.vpc.public_subnets)}"]
 
     tags {
         Name = "jniedrauer.com"
+    }
+}
+
+resource "aws_security_group" "elb-sg" {
+    name = "elb_sg"
+    description = "Allow webserver traffic to ECS cluster"
+    vpc_id = "${module.vpc.id}"
+
+    ingress {
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        from_port = 443
+        to_port = 443
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+
+resource "aws_security_group" "ecs-sg" {
+    name = "ecs"
+    description = "Allow traffic from elb_sg"
+    vpc_id = "${module.vpc.id}"
+
+    ingress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        security_groups = ["${aws_security_group.elb-sg.id}"]
+    }
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
