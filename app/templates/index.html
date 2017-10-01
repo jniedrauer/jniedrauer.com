@@ -13,5 +13,24 @@
 {% endblock %}
 
 {% block content %}
-<h2>Future home of Josiah Niedrauer's website</h2>
+  <h2>Future home of Josiah Niedrauer's website</h2>
+  <div id='guestbook-container'>
+    <h3>Sign my guestbook... if you can find it</h3>
+    <table id='guestbook' cellspacing='0'>
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Timestamp</th>
+        </tr>
+{% for guest in guests %}
+        <tr class="{{ 'table-light' if loop.index % 2 == 0 else 'table-dark' }}">
+          <td>{{ guest.get('id') }}</th>
+          <td>{{ guest.get('name') }}</th>
+          <td>{{ guest.get('timestamp') }}</th>
+        </tr>
+{% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
