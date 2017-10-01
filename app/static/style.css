@@ -24,7 +24,7 @@ h2 {
 #topbar  {
     top: 0px;
     height: 3px;
-    background: #c3e29c;
+    background: #b3ed45;
 }
 
 #header {
@@ -42,12 +42,41 @@ h2 {
 }
 
 #header-content {
+    width: 900px;
+    height: 70px;
+    margin-left:auto;
+    margin-right:auto;
     padding-left: 20px;
 }
 
+#accent {
+    margin-top: 70px;
+    width: 100;
+    height: 200px;
+    background: #29b768;
+    background-image: url(accent.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#accent-title {
+    width: 900px;
+    height: 100;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+}
+
+#accent-title, h1 h2 h3 {
+    color: white;
+    background-color: #b3ed45;
+    background: transparent;
+}
+
 #content {
-    margin-top: 80px;
-    padding-left: 20px;
+    width: 900px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #guestbook-container {

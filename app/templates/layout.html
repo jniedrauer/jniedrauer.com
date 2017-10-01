@@ -7,16 +7,24 @@
     {% endblock %}
   </head>
   <body>
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id='header'>
+      {% block header %}
+      <div id='topbar'></div>
+      <div id='header-content'>
+        <img src="logo.png" alt="Josiah Niedrauer" style="width:240px;height:28px;vertical-align:middle;">
+      </div>
+      {% endblock %}
+    </div>
+    <div id="accent">
+      <div id="accent-title">
+        {% block accent_title %}
+        {% endblock %}
+      </div>
+    </div>
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
     <div id="footer">{% block footer %}{% endblock %}</div>
   </body>
 </html>
-
-{% block header %}
-<div id='header'>
-  <div id='topbar'></div>
-  <div id='header-content'>
-    <h1 id='header-title'>Josiah Niedrauer's website</h1>
-  </div>
-</div>
-{% endblock %}
