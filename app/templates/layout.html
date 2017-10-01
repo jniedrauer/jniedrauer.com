@@ -11,7 +11,26 @@
       {% block header %}
       <div id='topbar'></div>
       <div id='header-content'>
-        <img src="logo.png" alt="Josiah Niedrauer" style="width:240px;height:28px;vertical-align:middle;">
+        <table id='header-layout' cellspacing='0'>
+          <tbody>
+            <tr>
+              <td>
+                <img src="logo.png" alt="Josiah Niedrauer" style="width:240px;height:28px;vertical-align:middle;">
+              <td>
+              <td style='padding-left:20px;'>
+              </td>
+              <td>
+                 <a href='tech' id='tech-nav' class='header-btn {{ "current-page-btn" if request.path == "/tech" else "" }}'>The Tech<a/>
+              <td>
+              <td>
+                 <a href='api-docs' id='api-nav' class='header-btn {{ "current-page-btn" if request.path == "/api-docs" else "" }}'>The API<a/>
+              </td>
+              <td>
+                 <a href='bio' id='bio-nav' class='header-btn {{ "current-page-btn" if request.path == "/bio" else "" }}'>Who Am I<a/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       {% endblock %}
     </div>

@@ -29,7 +29,7 @@ h2 {
 
 #header {
     top: 0px;
-    height: 70px;
+    height: 71px;
     line-height: 70px;
     background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
     border-bottom: 1px solid #dbdbdb;
@@ -47,6 +47,30 @@ h2 {
     margin-left:auto;
     margin-right:auto;
     padding-left: 20px;
+}
+
+#header-layout {
+    height: 100%;
+}
+
+.header-btn {
+    margin: 0 5px;
+    padding: 0 15px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s linear, color 0.2s linear;
+    color: #616161;
+    text-decoration: none;
+    outline: 0;
+}
+
+.header-btn:hover, .header-btn:focus {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.current-page-btn {
+    background-color: #f2f2f2;
 }
 
 #accent {
