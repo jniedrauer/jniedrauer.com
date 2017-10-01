@@ -9,9 +9,12 @@
         "containerPort": 80,
         "hostPort": 8080
       }
-    ]
+    ],
     "mountPoints": [
-        "/var/lib/docker/volumes/sqlite:/var/lib/sqlite"
+      {
+        "sourceVolume": "sqlite",
+        "containerPath": "/var/lib/sqlite"
+      }
     ]
   }
 ]
