@@ -8,7 +8,4 @@ if os.environ.get('FLASK_CONFIG'):
 else:
     app.config.from_object('debug_config')
 
-if app.config.get('STATIC_PATH'):
-    app.static_folder = os.path.join(app.root_path, app.config['STATIC_PATH'])
-
 from .core import views
