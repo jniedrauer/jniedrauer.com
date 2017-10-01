@@ -55,7 +55,7 @@ deploy: build
 	AWS_PROFILE=${AWS_PROFILE} \
 		aws ecs register-task-definition --region=${REGION} --family=service \
 		--container-definitions '$(shell sed 's|$$$\{image}|${REPO}:${IMAGE_NAME}.${TAG}|' \
-            prod/services/webserver-cluster/task-definitions/service.json)'
+            terraform/stack/services/webserver-cluster/task-definitions/service.json)'
 	AWS_PROFILE=${AWS_PROFILE} \
 		aws ecs update-service --region=${REGION} \
 		--cluster=jniedrauer-com \
