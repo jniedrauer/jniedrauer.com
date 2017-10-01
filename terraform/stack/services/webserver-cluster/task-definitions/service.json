@@ -10,5 +10,8 @@
         "hostPort": 8080
       }
     ]
+    "mountPoints": [
+        "/var/lib/docker/volumes/sqlite:/var/lib/sqlite"
+    ]
   }
 ]

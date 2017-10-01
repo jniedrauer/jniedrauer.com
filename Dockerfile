@@ -2,6 +2,7 @@ FROM tiangolo/uwsgi-nginx-flask:python3.6
 
 COPY ./app /app/main
 RUN ln -s /app/main/static /app/static
+RUN mkdir -p /var/lib/sqlite
 
 COPY prod_config.conf /etc/jniedrauer/flask.conf
 
