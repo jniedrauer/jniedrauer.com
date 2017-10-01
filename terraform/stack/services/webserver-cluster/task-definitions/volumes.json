@@ -1,0 +1,8 @@
+[
+  {
+    "name": "sqlite",
+    "host": {
+      "sourcePath": "/var/lib/docker/volumes/sqlite"
+    }
+  }
+]
