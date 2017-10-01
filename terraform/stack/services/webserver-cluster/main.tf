@@ -15,7 +15,7 @@ resource "aws_ecr_repository" "ecr" {
 data "template_file" "container-definition" {
     template = "${file("${path.module}/task-definitions/service.json")}"
     vars {
-        image = "${aws_ecr_repository.ecr.repository_url}"
+        image = "${aws_ecr_repository.ecr.repository_url}:latest"
     }
 }
 
