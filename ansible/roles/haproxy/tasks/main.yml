@@ -1,4 +1,8 @@
 ---
+- stat:
+    path: '{{ combined }}'
+  register: san_tls
+
 - name: Install HAProxy
   yum:
     name: haproxy

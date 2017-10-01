@@ -26,8 +26,5 @@
       --reloadcmd 'umask 027 && cat {{ fullchain }} {{ key }} >{{ combined }} && chown root:haproxy {{ combined }} && service haproxy restart'
   args:
     creates: '{{ fullchain }}'
-
-- name: test
-  command: echo test
   notify:
     - haproxy-tls
