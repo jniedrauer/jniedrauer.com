@@ -21,3 +21,7 @@ def plain_ip():
 def api_ip():
     client_ip = request.headers.get('X-Forwarded-For') or request.remote_addr
     return jsonify({'Success': True, 'ipAddress': client_ip})
+
+@app.route('/api/config')
+def api_config():
+    return jsonify(app.config)
