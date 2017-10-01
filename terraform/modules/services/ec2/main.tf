@@ -51,6 +51,10 @@ resource "aws_instance" "main" {
     }
 }
 
+output "public_ip" {
+    value = "${aws_instance.main.public_ip}"
+}
+
 #resource "null_resource" "export_rendered_template" {
 #  provisioner "local-exec" {
 #    command = "cat > test_output.sh <<EOL\n${data.template_cloudinit_config.config.rendered}\nEOL"
