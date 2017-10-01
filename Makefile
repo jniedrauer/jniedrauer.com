@@ -1,6 +1,5 @@
 # vim: set noet
 
-ENV := prod
 TAG := $(shell git rev-parse --short HEAD)
 EMAIL = jniedrauer.com
 IMAGE_NAME = jniedrauer.com
@@ -68,22 +67,22 @@ deploy: build
 #############
 
 .terraform:
-	$(TERRAFORM) init ${ENV}
+	$(TERRAFORM) init terraform/stack
 
 tfsetup: .terraform
-	$(TERRAFORM) get ${ENV}
+	$(TERRAFORM) get terraform/stack
 
 refresh:
-	$(TERRAFORM) refresh ${ENV}
+	$(TERRAFORM) refresh terraform/stack
 
 plan: tfsetup
-	$(TERRAFORM) plan ${ENV}
+	$(TERRAFORM) plan terraform/stack
 
 apply:
-	$(TERRAFORM) apply ${ENV}
+	$(TERRAFORM) apply terraform/stack
 
 destroy:
-	$(TERRAFORM) destroy ${ENV}
+	$(TERRAFORM) destroy terraform/stack
 
 help:
 	@echo "No target specified will create a virtualenv and init terraform."

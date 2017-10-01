@@ -154,6 +154,9 @@ resource "aws_ecs_service" "website" {
     name = "jniedrauer-com"
     cluster = "${aws_ecs_cluster.website.id}"
     task_definition = "${aws_ecs_task_definition.service.arn}"
+    lifecycle {
+        ignore_changes = ["task_definition"]
+    }
     desired_count = 1
     deployment_minimum_healthy_percent = 0
     iam_role = "${aws_iam_role.ecs.id}"
