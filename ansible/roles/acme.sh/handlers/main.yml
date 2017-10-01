@@ -1,0 +1,13 @@
+---
+- name: haproxy-tls
+  lineinfile:
+    path: /etc/haproxy/haproxy.cfg
+    regexp: '^.*bind.*:443'
+    line: 'bind *:443 ssl crt /etc/haproxy/tls'
+  notify:
+    - haproxy
+
+- name: haproxy
+  service:
+    name: haproxy
+    state: restarted

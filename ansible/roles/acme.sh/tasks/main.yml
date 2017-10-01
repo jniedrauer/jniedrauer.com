@@ -1,0 +1,33 @@
+---
+- name: Install netcat
+  yum:
+    name: nc
+    state: present
+
+- name: Extract acme.sh
+  unarchive:
+    src: 'https://github.com/Neilpang/acme.sh/archive/2.7.3.tar.gz'
+    dest: /tmp
+    remote_src: True
+
+- name: Install acme.sh
+  command: /tmp/acme.sh-2.7.3/acme.sh --install --home /root/.acme.sh
+  args:
+    chdir: /tmp/acme.sh-2.7.3
+    creates: /root/.acme.sh/acme.sh
+
+- name: Issue certificates
+  command: >
+    /root/.acme.sh/acme.sh --accountemail {{ admin_email }}
+      --issue --standalone --httpport {{ acme_nc_port }}
+      -d {{ ' -d '.join(tls_hostnames) }}
+      --key-file {{ key }}
+      --fullchain-file {{ fullchain }}
+      --reloadcmd 'umask 027 && cat {{ fullchain }} {{ key }} >{{ combined }} && chown root:haproxy {{ combined }} && service haproxy restart'
+  args:
+    creates: '{{ fullchain }}'
+
+- name: test
+  command: echo test
+  notify:
+    - haproxy-tls

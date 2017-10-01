@@ -1,0 +1,29 @@
+---
+- name: Install HAProxy
+  yum:
+    name: haproxy
+    state: present
+
+- name: Add configuration
+  template:
+    src: haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - haproxy
+
+- name: Make SAN directory
+  file:
+    path: /etc/haproxy/tls
+    state: directory
+    owner: root
+    group: haproxy
+    mode: 0750
+
+- name: Start and enable HAProxy
+  service:
+    name: haproxy
+    state: started
+    enabled: yes

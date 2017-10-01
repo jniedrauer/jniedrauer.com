@@ -1,0 +1,4 @@
+---
+key: /etc/pki/tls/private/san.key
+fullchain: /etc/pki/tls/private/san.fullchain
+combined: /etc/haproxy/tls/san.pem

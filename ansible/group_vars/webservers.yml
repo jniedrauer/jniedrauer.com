@@ -1,0 +1,2 @@
+acme_nc_port: 8443
+docker_port: 8080
