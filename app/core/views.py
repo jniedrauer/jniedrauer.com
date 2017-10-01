@@ -1,5 +1,5 @@
 from flask import jsonify, render_template, request
-from . import app
+from ..main import app
 
 
 @app.errorhandler(404)
@@ -11,9 +11,11 @@ def not_found(error):
 def index():
     return render_template('index.html', title='Hello World!')
 
+
 @app.route('/ip')
 def plain_ip():
     return request.remote_addr
+
 
 @app.route('/api/ip')
 def api_ip():
