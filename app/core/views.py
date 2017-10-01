@@ -1,5 +1,6 @@
 from flask import jsonify, render_template, request
 from ..main import app
+from .api import get_client_ip
 
 
 @app.errorhandler(404)
@@ -14,14 +15,4 @@ def index():
 
 @app.route('/ip')
 def plain_ip():
-    return request.remote_addr
-
-
-@app.route('/api/ip')
-def api_ip():
-    client_ip = request.headers.get('X-Forwarded-For') or request.remote_addr
-    return jsonify({'Success': True, 'ipAddress': client_ip})
-
-@app.route('/api/config')
-def api_config():
-    return jsonify(app.config)
+    return get_client_ip()

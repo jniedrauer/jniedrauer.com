@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, g, render_template
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -8,4 +8,4 @@ if os.environ.get('FLASK_CONFIG'):
 else:
     app.config.from_object('debug_config')
 
-from .core import views
+from .core import views, api
