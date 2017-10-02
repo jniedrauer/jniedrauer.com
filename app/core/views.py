@@ -1,6 +1,6 @@
 import markdown
 import os
-from flask import jsonify, render_template, request
+from flask import jsonify, render_template, request, url_for
 from ..main import app, db
 from dictalchemy import make_class_dictable
 make_class_dictable(db.Model)
@@ -33,14 +33,34 @@ def bio():
     return render_template('bio.html', title=title, content=content)
 
 
+@app.route('/tech')
+def tech():
+    title = get_content_from_files('tech-title.md')[0]
+    content = 'tech.html'
+    stacks = {
+        'Amazon ECS': 'content/ecs.html',
+        'Ansible': 'content/ansible.html',
+        'Docker': 'content/docker.html',
+        'Flask': 'content/flask.html',
+        'Haproxy': 'content/haproxy.html',
+        'LetsEncrypt': 'content/le.html',
+        'Python3': 'content/python.html',
+        'SQLAlchemy': 'content/sql.html',
+        'SQLite': 'content/sqlite.html',
+        'Terraform': 'content/tf.html',
+        'acme.sh': 'content/acme.html'
+    }
+    return render_template('page.html', title=title, html_content=content, stacks=stacks)
+
+
 def get_content_from_files(*args):
     """Get content from the given files and return it as a tuple"""
-    return (get_content_from_file(i) or '' for i in args)
+    return [get_content_from_file(i) or '' for i in args]
 
 
 def get_content_from_file(name):
     """Get content from the file with error handling"""
-    path = os.path.join(CONTENT_PATH, name)
+    path = get_static(name)
 
     if not os.path.isfile(path):
         app.logger.error('File not found: %s', path)
@@ -48,6 +68,11 @@ def get_content_from_file(name):
 
     with open(path) as f:
         return f.read().strip()
+
+
+def get_static(name):
+    """Get the path for static file"""
+    return os.path.join(CONTENT_PATH, name)
 
 
 @app.route('/ip')

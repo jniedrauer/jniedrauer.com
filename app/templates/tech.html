@@ -1,0 +1,13 @@
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<h2>Here's the stack</h2>
+<section>
+  <article>
+    {% for stack, stack_content in stacks.items() %}
+    <details>
+      <summary>{{ stack }}</summary>
+      {% include stack_content %}
+      <br><br>
+    </details>
+    {% endfor %}
+  </article>
+</section>

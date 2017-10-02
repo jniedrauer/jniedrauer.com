@@ -1,6 +1,6 @@
 # What I've been doing
 
-For the last few years, I've been running Devops at a Software company called Granbury Solutions. Their focus is on the Restaurant/Retail Point-of-Sale market. As a result, I've spent a lot of time working on PCI-DSS compliant networks with Highly Available infrastructure where data integrity is key.
+For the last few years, I've been running Devops at a Software company called Granbury Solutions, in Dallas, TX. Their focus is on the Restaurant/Retail Point-of-Sale market. As a result, I've spent a lot of time working on PCI-DSS compliant networks with Highly Available infrastructure where data integrity is key.
 
 Most of that time has been spent migrating resources from on-premise and physical datacenters, to Amazon Web Services, using Infrastructure-as-Code provisioning and Configuration Management tools.
 

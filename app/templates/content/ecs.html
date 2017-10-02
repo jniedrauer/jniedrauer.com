@@ -1,0 +1,12 @@
+Amazon's EC2 Container Service is pretty straightforward to use. I prefer setting up configuration and autoscaling manually, as opposed to Elastic Beanstalk.
+
+In this configurating, I am using a single EC2 instance with no autoscaling. The EC2 instance is manually joined to the cluster using the UserData script:<br>
+
+<pre class="prettyprint">
+#!/bin/bash -x
+  
+mkdir -p /etc/ecs
+echo 'ECS_CLUSTER=${cluster}' >> /etc/ecs/ecs.config
+</pre>
+
+It's a little bit hacky, but this is the recommended way of doing it.
