@@ -2,11 +2,13 @@ Amazon's EC2 Container Service is pretty straightforward to use. I prefer settin
 
 In this configurating, I am using a single EC2 instance with no autoscaling. The EC2 instance is manually joined to the cluster using the UserData script:<br>
 
-<pre class="prettyprint">
+{% raw %}
+<pre class='prettyprint'>
 #!/bin/bash -x
   
 mkdir -p /etc/ecs
 echo 'ECS_CLUSTER=${cluster}' >> /etc/ecs/ecs.config
 </pre>
+{% endraw %}
 
-It's a little bit hacky, but this is the recommended way of doing it.
+It's a little bit hacky, but this is the <a href='http://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html'>recommended way of doing it</a>.

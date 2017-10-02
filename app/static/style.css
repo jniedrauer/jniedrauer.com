@@ -20,6 +20,10 @@ h2 {
     font-size: 17px;
 }
 
+a, summary {
+    outline: 0;
+}
+
 #topbar, #header {
     position: fixed;
     width: 100%;
@@ -65,7 +69,6 @@ h2 {
     transition: background 0.2s linear, color 0.2s linear;
     color: #616161;
     text-decoration: none;
-    outline: 0;
 }
 
 .header-btn:hover, .header-btn:focus {

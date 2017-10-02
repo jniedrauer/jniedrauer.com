@@ -1,0 +1,22 @@
+<a href='https://github.com/Neilpang/acme.sh'>acme.sh</a> is the best shell script I've ever used. It makes interacting with the LetsEncrypt API trivial.
+<br><br>
+Once you get it set up, it's more or less completely hands off. Your TLS certificates will be renewed automatically once every 60 days.
+<br><br>
+In this case, since I am using it with HAProxy, my configuration is a bit more complicated.
+
+{% raw %}
+<pre class='prettyprint'>
+/root/.acme.sh/acme.sh --accountemail {{ admin_email }}
+      --issue --standalone --httpport {{ acme_nc_port }}
+      -d {{ ' -d '.join(tls_hostnames) }}
+      --key-file {{ key }}
+      --fullchain-file {{ fullchain }}
+      --reloadcmd 'umask 027 && cat {{ fullchain }} {{ key }} >{{ combined }} && chown root:haproxy {{ combined }} && service haproxy restart'
+</pre>
+{% endraw %}
+
+It's running in standalone mode, which means it will use its own webserver (netcat) to listen for replies. I've got HAProxy in front of it, directing traffic from public port 80 to the localhost listener.
+<br><br>
+Jinja2 dynamically compiles a list of names for the SAN certificate.
+<br><br>
+The reloadcmd directive tells it what actions to perform when a certificate is renewed. There's really no limitation to what you can do here. Since uptime is not critical for me, I've elected to just concat the key and chain together, and then restart HAProxy.

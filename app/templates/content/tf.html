@@ -1,0 +1,25 @@
+Terraform is a fairly new technology to me. I've been using AWS Cloudformation, but have consistently run into some pretty serious limitations. Given a choice between these two, I would certainly choose Terraform.
+<br><br>
+The main advantage to Terraform, is that it's really fast. I can still declare all the same resources in a similar way to Cloudformation, but I don't have to worry about the stack becoming stuck in an unstable state for 3 hours.
+<br><br>
+Having said that, it has some limitations of its own. The main issue I have run into so far is lack of loop control or standard programming operators. For example:
+
+{% raw %}
+<pre class='prettyprint'>
+data "template_file" "cloud-config-users" {
+    template = "${file("${path.module}/templates/user.tpl")}"
+    vars {
+        name = "${lookup(var.users[count.index], "name")}"
+        pubkeys = "${jsonencode(split(",", lookup(var.users[count.index], "pubkeys")))}"
+    }
+    count = "${length(var.users)}"
+}
+...
+data "template_cloudinit_config" "config" {
+    part { content = "${data.template_file.cloud-config-users.rendered}" }
+    count = "${var.number}"
+}
+</pre>
+{% endraw %}
+
+"count" is the rough equivalent of loop control in Terraform. Here, I can create an arbitrary number of users with SSH access. But what if I need 0? A standard for loop makes this so much easier.

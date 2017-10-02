@@ -1,0 +1,3 @@
+Flask is by far my favorite web framework. It's clean, fast, has none of the complicated hacks that come with larger MVC frameworks, and it can more or less do everything.
+<br><br>
+The main complication I had with writing the app is that I am using a non-standard directory tree due to running inside Docker. It made relative imports fairly difficult. Since `app` is actually declaired in main.py instead of __init__.py, anything that needs to import both the module namespace and app can easily end up importing things out of order and crash.

@@ -1,0 +1,26 @@
+HAProxy is an excellent load balancer/proxy solution. In this case, it acts as a listener for both LetsEncrypt ACME challenges, and web traffic.
+
+Here's the custom configuration portion of haproxy.cfg:
+{% raw %}
+<pre class='prettyprint'>
+listen webserver
+    bind *:80
+    {{ '' if san_tls.stat.exists else '# ' }}bind *:443 ssl crt /etc/haproxy/tls # This gets enabled after certs are issued
+
+    acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+    acl api-acl path_beg /api
+
+    redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl !api-acl
+
+    use_backend acme.sh if letsencrypt-acl
+    server docker localhost:{{ docker_port }}
+
+backend acme.sh
+    server acme-standalone localhost:{{ acme_nc_port }}
+</pre>
+{% endraw %}
+
+You can see a little bit of a hack toward the beginning using jinja2 templating. Since HAProxy is acting as a frontend for LetsEncrypt validation, it has to be able to run before the TLS certificats have been issued. So it starts out with the TLS listener commented out, and uncomments it once the SAN TLS certificate exists.
+<br><br>
+
+Otherwise, it's a pretty standard setup. It redirects all traffic to HTTPS unless it is an ACME challenge or an API request. If it is an ACME challenge, it is redirected to a netcat listener spawned by acme.sh.
