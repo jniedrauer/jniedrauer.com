@@ -19,6 +19,11 @@ def index():
     return render_template('index.html', guests=guests)
 
 
+@app.route('/bio')
+def bio():
+    return render_template('bio.html')
+
+
 @app.route('/ip')
 def plain_ip():
     return get_client_ip()

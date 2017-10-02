@@ -79,16 +79,16 @@ h2 {
     height: 200px;
     background: #29b768;
     background-image: url(accent.png);
+    background-image: url(accent.png), linear-gradient(to bottom, #29b768 76%,#20934c 100%);
     background-repeat: no-repeat;
     background-position: center;
 }
 
 #accent-title {
     width: 900px;
-    height: 100;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 10px;
+    padding-top: 15px;
 }
 
 #accent-title, h1 h2 h3 {
@@ -97,8 +97,17 @@ h2 {
     background: transparent;
 }
 
+#accent-title h2 {
+    font-size: 30px;
+}
+
+#accent-title, h3 {
+    font-weight: 100;
+}
+
 #content {
     width: 900px;
+    padding-top: 20px;
     margin-left:auto;
     margin-right:auto;
 }
