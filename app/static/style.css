@@ -38,7 +38,7 @@ summary {
 }
 
 details[open] summary {
-    background: #29b768;
+    background: #aae0c2;
 }
 
 .stack-content {
@@ -131,7 +131,7 @@ details[open] summary {
 
 #accent-title h2 {
     font-size: 20px;
-    font-weight: 100;
+    font-weight: normal;
 }
 
 #content {

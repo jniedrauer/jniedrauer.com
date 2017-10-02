@@ -53,6 +53,12 @@ def tech():
     return render_template('page.html', title=title, html_content=content, stacks=stacks)
 
 
+@app.route('/api-docs')
+def api_docs():
+    title, content = get_content_from_files('api-docs-title.md', 'api-docs.md')
+    return render_template('page.html', title=title, md_content=content)
+
+
 def get_content_from_files(*args):
     """Get content from the given files and return it as a tuple"""
     return [get_content_from_file(i) or '' for i in args]
