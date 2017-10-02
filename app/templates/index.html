@@ -6,17 +6,20 @@
   <meta name="google-site-verification" content="Me-tRtCf5C_VA2aaUHm5WK9qRGfNZ9rHYAFkkmgTRvc" />
 {% endblock %}
 
-{% block title %}Index{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block header %}
   {{ super() }}
 {% endblock %}
 
 {% block accent_title %}
-  <h2>Future home of Josiah Niedrauer's website</h2>
+  {{ title|markdown }}
 {% endblock %}
 
 {% block content %}
+  <div class='plaintext-content'>
+    {{ content|markdown }}
+  </div>
   <div id='guestbook-container'>
     <h3>Sign my guestbook... if you can find it</h3>
     <table id='guestbook' cellspacing='0'>

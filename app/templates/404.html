@@ -1,13 +1,16 @@
 {% extends 'layout.html' %}
   
-{% block title %}404 Page Not Found{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block header %}
   {{ super() }}
 {% endblock %}
 
+{% block accent_title %}
+  {{ title|markdown }}
+{% endblock %}
+
 {% block content %}
-<h2>Error 404 - Well this is awkward</h2>
 {{ request.path }} doesn't seem to exist yet
 {% endblock %}
 

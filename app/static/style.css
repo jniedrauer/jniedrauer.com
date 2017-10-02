@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 html, body {
     line-height: 1.5;
 }
@@ -9,11 +13,11 @@ body {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 20px;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 17px;
 }
 
 #topbar, #header {
@@ -81,14 +85,14 @@ h2 {
     background-image: url(accent.png);
     background-image: url(accent.png), linear-gradient(to bottom, #29b768 76%,#20934c 100%);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: 70% 50%;
 }
 
 #accent-title {
     width: 900px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 15px;
+    padding-top: 5px;
 }
 
 #accent-title, h1 h2 h3 {
@@ -97,11 +101,12 @@ h2 {
     background: transparent;
 }
 
-#accent-title h2 {
+#accent-title h1 {
     font-size: 30px;
 }
 
-#accent-title, h3 {
+#accent-title h2 {
+    font-size: 20px;
     font-weight: 100;
 }
 
