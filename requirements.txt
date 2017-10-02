@@ -1,3 +1,4 @@
+cffi==1.11.0
 click==6.7
 dictalchemy==0.1.2.7
 Flask==0.12.2
@@ -5,7 +6,9 @@ Flask-Misaka==0.4.1
 Flask-SQLAlchemy==2.3.0
 itsdangerous==0.24
 Jinja2==2.9.6
+Markdown==2.6.9
 MarkupSafe==1.0
 misaka==2.1.0
+pycparser==2.18
 SQLAlchemy==1.1.14
 Werkzeug==0.12.2
