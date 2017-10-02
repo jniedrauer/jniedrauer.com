@@ -1,12 +1,16 @@
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-<h2>Here's the stack</h2>
+You can view the full code that provisioned and configured this website on <a href='https://github.com/jniedrauer/jniedrauer.com'>github</a>.
+Feel free to use it or modify it for your own needs.
+<br>
+<h2>Here's an overview of the stack</h2>
 <section>
   <article>
     {% for stack, stack_content in stacks.items() %}
     <details>
       <summary>{{ stack }}</summary>
-      {% include stack_content %}
-      <br><br>
+      <div class='stack-content'>
+        {% include stack_content %}
+      </div>
     </details>
     {% endfor %}
   </article>
