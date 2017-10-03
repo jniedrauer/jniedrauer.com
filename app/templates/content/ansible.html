@@ -52,4 +52,4 @@ Finally, it will notify the HAProxy daemon using a series of handlers:
 
 This looks a bit more complicated than it is. Because acme.sh relies on HAProxy to route the .well-known challenge, HAProxy must be able to run before a certificate has been issued. This series of notifiers uncomments the HTTPS listener, and then restarts the HAProxy daemon.
 <br>
-In the event that this was immutable infrastructure, the TLS certificats would be lost for every change. You would quickly run up against the LetsEncrypt rate limits. You could potentially store the certificates (hopefully encrypted) in some kind of persistent storage, but the complexity of the stack would increase dramatically.
+In the event that this was immutable infrastructure, the TLS certificates would be lost for every change. You would quickly run up against the LetsEncrypt rate limits. You could potentially store the certificates (hopefully encrypted) in some kind of persistent storage, but the complexity of the stack would increase dramatically.

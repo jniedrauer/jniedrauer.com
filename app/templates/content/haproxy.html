@@ -20,7 +20,7 @@ backend acme.sh
 </pre>
 {% endraw %}
 
-You can see a little bit of a hack toward the beginning using jinja2 templating. Since HAProxy is acting as a frontend for LetsEncrypt validation, it has to be able to run before the TLS certificats have been issued. So it starts out with the TLS listener commented out, and uncomments it once the SAN TLS certificate exists.
+You can see a little bit of a hack toward the beginning using jinja2 templating. Since HAProxy is acting as a frontend for LetsEncrypt validation, it has to be able to run before the TLS certificates have been issued. So it starts out with the TLS listener commented out, and uncomments it once the SAN TLS certificate exists.
 <br><br>
 
 Otherwise, it's a pretty standard setup. It redirects all traffic to HTTPS unless it is an ACME challenge or an API request. If it is an ACME challenge, it is redirected to a netcat listener spawned by acme.sh.
