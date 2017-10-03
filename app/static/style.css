@@ -41,6 +41,10 @@ details[open] summary {
     background: #aae0c2;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 .stack-content {
     padding: 10px;
 }
