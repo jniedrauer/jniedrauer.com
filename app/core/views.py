@@ -22,19 +22,24 @@ def not_found(error):
 
 @app.route('/')
 def index():
+    page_title = 'Index'
     title, content = get_content_from_files('index-title.md', 'index.md')
     guests = [r.asdict() for r in Guest.query.all()]
-    return render_template('index.html', title=title, content=content, guests=guests)
+    return render_template(
+        'index.html', page_title=page_title, title=title, content=content, guests=guests
+    )
 
 
 @app.route('/bio')
 def bio():
+    page_title = 'Bio'
     title, content = get_content_from_files('bio-title.md', 'bio.md')
-    return render_template('bio.html', title=title, content=content)
+    return render_template('bio.html', page_title=page_title, title=title, content=content)
 
 
 @app.route('/tech')
 def tech():
+    page_title = 'Tech'
     title = get_content_from_files('tech-title.md')[0]
     content = 'tech.html'
     stacks = {
@@ -50,13 +55,16 @@ def tech():
         'Terraform': 'content/tf.html',
         'acme.sh': 'content/acme.html'
     }
-    return render_template('page.html', title=title, html_content=content, stacks=stacks)
+    return render_template(
+        'page.html', page_title=page_title, title=title, html_content=content, stacks=stacks
+    )
 
 
 @app.route('/api-docs')
 def api_docs():
+    page_title = 'API'
     title, content = get_content_from_files('api-docs-title.md', 'api-docs.md')
-    return render_template('page.html', title=title, md_content=content)
+    return render_template('page.html', page_title=page_title, title=title, md_content=content)
 
 
 def get_content_from_files(*args):
